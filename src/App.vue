@@ -1,6 +1,10 @@
 <script setup>
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 </script>
 
 <template>
-  <h1>Muhammad Abdullah Afaq--fullstackdeveloper</h1>
+  <Header />
+  <router-view />
+  <Footer />
 </template>
