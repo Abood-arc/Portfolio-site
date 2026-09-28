@@ -1,63 +1,41 @@
 <script setup>
+import { site } from '../data/site'
 </script>
 
 <template>
-  <div class="container contact-page">
-    <div class="contact-content">
-      <div class="contact-cta">
-        <a href="mailto:abdullahafaq17@gmail.com" class="btn">Email Me</a>
-      </div>
-      <div class="resume-link">
-        <a href="/Abdullah_FS_CV.pdf" target="_blank" class="text-link">Download Resume / CV</a>
-      </div>
+  <div class="container page">
+    <div class="prose">
+      <h1>Contact</h1>
+      <p class="lede">Want to talk about how I'd approach your product? Email me.</p>
+      <p class="contact__email"><a :href="`mailto:${site.email}`">{{ site.email }}</a></p>
+      <dl class="facts">
+        <div>
+          <dt>Based in</dt>
+          <dd>{{ site.location }} ({{ site.timezone }})</dd>
+        </div>
+        <div>
+          <dt>CV</dt>
+          <dd><a :href="site.cv" target="_blank" rel="noopener">Download PDF</a></dd>
+        </div>
+        <div>
+          <dt>Code</dt>
+          <dd><a :href="site.github" target="_blank" rel="noopener noreferrer">github.com/Abood-arc</a></dd>
+        </div>
+        <div>
+          <dt>LinkedIn</dt>
+          <dd><a :href="site.linkedin" target="_blank" rel="noopener noreferrer">linkedin.com/in/abdullah-afaq-822607282</a></dd>
+        </div>
+      </dl>
     </div>
   </div>
 </template>
 
 <style scoped>
-.contact-page {
-  padding-top: 8rem;
-  padding-bottom: 8rem;
-  display: flex;
-  justify-content: center;
-}
-
-.contact-content {
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.btn {
-  display: inline-block;
-  width: 100%;
-  padding: 1.25rem 2.5rem;
+.contact__email {
+  margin: var(--space-3) 0 var(--space-4);
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: clamp(1.375rem, 1rem + 2vw, 2rem);
   font-weight: 600;
-  color: var(--bg-cream);
-  background-color: var(--text-dark);
-  border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn:hover {
-  background-color: var(--accent-ochre);
-  color: var(--bg-cream);
-  transform: translateY(-2px);
-}
-
-.text-link {
-  font-size: 1.125rem;
-  color: var(--text-muted);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.text-link:hover {
-  color: var(--accent-ochre);
+  overflow-wrap: anywhere;
 }
 </style>
