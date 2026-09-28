@@ -1,35 +1,27 @@
 <script setup>
 import { projects } from '../data/projects'
 import WorkCard from '../components/WorkCard.vue'
+
+const [lead, ...rest] = projects
 </script>
 
 <template>
-  <div class="container work-page">
-    <h1 class="page-title">Work</h1>
-    <div class="work-grid">
-      <WorkCard 
-        v-for="project in projects" 
-        :key="project.id" 
-        :project="project" 
-      />
-    </div>
+  <div class="container page">
+    <header class="work-intro">
+      <h1>Work</h1>
+      <p class="lede">
+        Four projects, each written up the same way: the problem, what I did, what came of it, and what I'd do next time.
+        Qubix is the one with real customers.
+      </p>
+    </header>
+    <WorkCard :project="lead" variant="lead" heading-level="h2" />
+    <WorkCard v-for="project in rest" :key="project.slug" :project="project" heading-level="h2" />
   </div>
 </template>
 
 <style scoped>
-.work-page {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-
-.page-title {
-  font-size: 3rem;
-  margin-bottom: 3rem;
-}
-
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 2rem;
+.work-intro {
+  max-width: var(--measure);
+  margin-bottom: var(--space-4);
 }
 </style>

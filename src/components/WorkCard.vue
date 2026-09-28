@@ -2,101 +2,112 @@
 import { RouterLink } from 'vue-router'
 
 defineProps({
-  project: {
-    type: Object,
-    required: true
-  }
+  project: { type: Object, required: true },
+  variant: {
+    type: String,
+    default: 'row',
+    validator: (value) => ['lead', 'row'].includes(value),
+  },
+  headingLevel: { type: String, default: 'h3' },
 })
 </script>
 
 <template>
-  <RouterLink :to="`/work/${project.slug}`" class="work-card transition-transform">
-    <div class="image-wrapper">
-      <img :src="project.image" :alt="project.title" loading="lazy" />
+  <article class="work-card" :class="`work-card--${variant}`">
+    <RouterLink :to="`/work/${project.slug}`" class="work-card__media" tabindex="-1" aria-hidden="true">
+      <img :src="project.image.src" alt="" :loading="variant === 'lead' ? 'eager' : 'lazy'" decoding="async" />
+    </RouterLink>
+    <div class="work-card__body">
+      <p class="label">{{ project.kind }} · {{ project.status }}</p>
+      <component :is="headingLevel" class="work-card__title">
+        <RouterLink :to="`/work/${project.slug}`">{{ project.title }}</RouterLink>
+      </component>
+      <p class="work-card__subtitle">{{ project.subtitle }}</p>
+      <p class="work-card__summary">{{ project.summary }}</p>
+      <p class="work-card__stack">{{ project.stack.join(' · ') }}</p>
+      <RouterLink :to="`/work/${project.slug}`" class="work-card__more">
+        Read the case study<span class="visually-hidden">: {{ project.title }}</span> →
+      </RouterLink>
     </div>
-    <div class="content">
-      <h3 class="title">{{ project.title }}</h3>
-      <p class="subtitle">{{ project.subtitle }}</p>
-      <div class="tags">
-        <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-      </div>
-    </div>
-  </RouterLink>
+  </article>
 </template>
 
 <style scoped>
 .work-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  text-decoration: none;
-  height: 100%;
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--color-rule);
 }
 
-.work-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-ochre);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+.work-card__media {
+  display: block;
 }
 
-.image-wrapper {
+.work-card__media img {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background-color: var(--bg-cream);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.image-wrapper img {
-  width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  object-position: top;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius);
+  background: var(--color-surface);
 }
 
-.work-card:hover .image-wrapper img {
-  transform: scale(1.03);
+.work-card__title {
+  margin-bottom: 0.25rem;
+  font-size: var(--text-h3);
 }
 
-.content {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+.work-card__title a {
+  color: var(--color-text);
+  text-decoration: none;
 }
 
-.title {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 0.5rem;
+.work-card__title a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
 }
 
-.subtitle {
-  font-size: 1rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
+.work-card__subtitle {
+  margin-bottom: var(--space-2);
+  color: var(--color-muted);
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+.work-card__summary {
+  max-width: var(--measure);
 }
 
-.tag {
-  font-size: 0.75rem;
+.work-card__stack {
+  font-size: var(--text-small);
+  color: var(--color-muted);
+}
+
+.work-card__more {
+  font-size: var(--text-small);
   font-weight: 500;
-  padding: 0.25rem 0.75rem;
-  background-color: var(--bg-cream);
-  color: var(--accent-ochre);
-  border: 1px solid rgba(168, 118, 62, 0.4);
-  border-radius: 9999px;
+}
+
+.work-card--row {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 48rem) {
+  .work-card--row {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+}
+
+.work-card--lead .work-card__media {
+  margin-bottom: var(--space-4);
+}
+
+.work-card--lead .work-card__media img {
+  aspect-ratio: auto;
+}
+
+.work-card--lead .work-card__title {
+  font-size: var(--text-h2);
 }
 </style>
