@@ -1,96 +1,74 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import { projects } from '../data/projects'
+import { site } from '../data/site'
 import WorkCard from '../components/WorkCard.vue'
+
+const [qubix, ...others] = projects
+const liveStore = qubix.links[0]
 </script>
 
 <template>
-  <div class="container home-page">
-    <section class="hero transition-transform">
-      <div class="hero-content">
-        <h1 class="hero-title">Muhammad Abdullah</h1>
-        <p class="hero-text">
-          I take a full-stack product from client requirement to a live, deployed system — proven by Qubix, a Laravel/Vue ecommerce platform with a full storefront and admin panel, built and deployed to production at jjbags.in. I'm proving this to a hiring manager screening full-stack candidates, so they'll email me to talk.
-        </p>
-      </div>
-      <div class="hero-image-wrapper">
-        <img src="../assets/qubix.jpg" alt="Qubix storefront hero" class="hero-image" />
-      </div>
+  <div class="container page">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="label">{{ site.name }} · {{ site.role }}, {{ site.location }}</p>
+      <h1 id="hero-title" class="hero__title">I built an ecommerce site for a client that's live and handling real customer orders.</h1>
+      <p class="lede hero__lede">Took their requirements, designed it, shipped it, and I'm maintaining it.</p>
+      <p class="hero__actions">
+        <RouterLink :to="`/work/${qubix.slug}`" class="button">Read the Qubix case study</RouterLink>
+        <a :href="liveStore.href" target="_blank" rel="noopener noreferrer">Visit {{ liveStore.label }} ↗</a>
+      </p>
+      <figure>
+        <img class="shot" :src="qubix.image.src" :alt="qubix.image.alt" fetchpriority="high" />
+        <figcaption>{{ qubix.image.caption }}</figcaption>
+      </figure>
     </section>
 
-    <section class="featured-work">
-      <h2 class="section-title">Selected Work</h2>
-      <div class="work-grid">
-        <WorkCard 
-          v-for="project in projects.slice(1)" 
-          :key="project.id" 
-          :project="project" 
-        />
-      </div>
+    <section class="more-work" aria-labelledby="more-work-title">
+      <h2 id="more-work-title">Other projects</h2>
+      <WorkCard v-for="project in others" :key="project.slug" :project="project" />
+      <p class="more-work__all"><RouterLink to="/work">All work →</RouterLink></p>
+    </section>
+
+    <section class="home-contact prose" aria-labelledby="home-contact-title">
+      <h2 id="home-contact-title">Hiring for a full-stack role?</h2>
+      <p>
+        Email me at <a :href="`mailto:${site.email}`">{{ site.email }}</a>,
+        or grab my <a :href="site.cv" target="_blank" rel="noopener">CV (PDF)</a>.
+      </p>
     </section>
   </div>
 </template>
 
 <style scoped>
-.home-page {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-
 .hero {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  margin-bottom: 6rem;
+  padding-bottom: var(--space-6);
 }
 
-@media (min-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-  }
+.hero__title {
+  max-width: 26ch;
 }
 
-.hero-title {
-  font-size: 4rem;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
+.hero__lede {
+  max-width: var(--measure);
 }
 
-.hero-text {
-  font-size: 1.25rem;
-  color: var(--text-muted);
-  line-height: 1.8;
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-4) 0 var(--space-5);
 }
 
-.hero-image-wrapper {
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--border-color);
+.more-work__all {
+  margin-top: var(--space-2);
+  font-weight: 500;
 }
 
-.hero-image {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-}
-
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 2rem;
-}
-
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 3rem;
-  }
+.home-contact {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-rule);
 }
 </style>
