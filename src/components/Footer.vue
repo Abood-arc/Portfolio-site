@@ -1,59 +1,61 @@
+<script setup>
+import { site } from '../data/site'
+
+const year = new Date().getFullYear()
+</script>
+
 <template>
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <p class="availability">Available for opportunities</p>
-        <p class="copyright">&copy; {{ new Date().getFullYear() }} Muhammad Abdullah</p>
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div>
+        <p class="site-footer__status">Open to full-stack roles.</p>
+        <p class="site-footer__meta">
+          {{ site.location }} ({{ site.timezone }}) ·
+          <a :href="`mailto:${site.email}`">{{ site.email }}</a>
+        </p>
       </div>
-      <div class="footer-links">
-        <a href="https://github.com/Abood-arc" target="_blank" class="transition-colors">GitHub</a>
-        <a href="https://www.linkedin.com/in/abdullah-afaq-822607282" target="_blank" class="transition-colors">LinkedIn</a>
-        <a href="/Abdullah_FS_CV.pdf" target="_blank" class="transition-colors">Resume</a>
-      </div>
+      <ul class="inline-list">
+        <li><a :href="site.github" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a :href="site.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a :href="site.cv" target="_blank" rel="noopener">CV (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="container">
+      <p class="site-footer__copy">© {{ year }} {{ site.name }}</p>
     </div>
   </footer>
 </template>
 
 <style scoped>
-.footer {
-  padding: 4rem 0;
-  border-top: 1px solid var(--border-color);
-  margin-top: 4rem;
+.site-footer {
+  margin-top: auto;
+  padding-block: var(--space-5) var(--space-4);
+  border-top: 1px solid var(--color-rule);
+  font-size: var(--text-small);
 }
 
-.footer-inner {
+.site-footer__inner {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
 }
 
-.availability {
+.site-footer__status {
+  margin-bottom: 0.25rem;
   font-family: var(--font-heading);
   font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--text-dark);
-  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
-.copyright {
-  font-size: 0.875rem;
-  color: var(--text-muted);
+.site-footer__meta {
   margin: 0;
+  color: var(--color-muted);
 }
 
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-links a {
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-.footer-links a:hover {
-  color: var(--accent-ochre);
+.site-footer__copy {
+  margin: var(--space-4) 0 0;
+  color: var(--color-muted);
 }
 </style>

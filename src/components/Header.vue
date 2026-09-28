@@ -3,54 +3,69 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <header class="header">
-    <div class="container header-inner">
-      <RouterLink to="/" class="logo transition-colors">Muhammad Abdullah</RouterLink>
-      <nav class="nav">
-        <RouterLink to="/work" class="nav-link transition-colors">Work</RouterLink>
-        <RouterLink to="/about" class="nav-link transition-colors">About</RouterLink>
-        <RouterLink to="/contact" class="nav-link transition-colors">Contact</RouterLink>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <RouterLink to="/" class="monogram" aria-label="Muhammad Abdullah Afaq, home">AA</RouterLink>
+      <nav aria-label="Primary">
+        <ul class="nav">
+          <li><RouterLink to="/work" class="nav__link">Work</RouterLink></li>
+          <li><RouterLink to="/about" class="nav__link">About</RouterLink></li>
+          <li><RouterLink to="/contact" class="nav__link">Contact</RouterLink></li>
+        </ul>
       </nav>
     </div>
   </header>
 </template>
 
 <style scoped>
-.header {
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--border-color);
+.site-header {
+  border-bottom: 1px solid var(--color-rule);
 }
 
-.header-inner {
+.site-header__inner {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 4.5rem;
 }
 
-.logo {
+.monogram {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-weight: 600;
-  color: var(--text-dark);
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  text-decoration: none;
 }
 
-.logo:hover {
-  color: var(--accent-ochre);
+.monogram:hover {
+  color: var(--color-link-hover);
 }
 
 .nav {
   display: flex;
-  gap: 2rem;
+  gap: clamp(1rem, 4vw, 2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.nav-link {
-  font-size: 1rem;
+.nav__link {
+  display: inline-block;
+  padding-block: 0.5rem;
+  border-bottom: 2px solid transparent;
+  font-size: var(--text-small);
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--color-text);
+  text-decoration: none;
 }
 
-.nav-link:hover,
-.nav-link.router-link-active {
-  color: var(--accent-ochre);
+.nav__link:hover {
+  color: var(--color-link-hover);
+}
+
+.nav__link.router-link-active {
+  border-bottom-color: var(--color-accent);
 }
 </style>
