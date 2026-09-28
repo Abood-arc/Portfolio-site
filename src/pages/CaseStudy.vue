@@ -1,130 +1,107 @@
 <script setup>
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { projects } from '../data/projects'
+import { useRoute, RouterLink } from 'vue-router'
+import { getProject, getNextProject } from '../data/projects'
+import { site } from '../data/site'
+import NotFound from './NotFound.vue'
 
 const route = useRoute()
-const router = useRouter()
-
-const project = computed(() => {
-  const found = projects.find(p => p.slug === route.params.slug)
-  if (!found && route.params.slug) {
-    // Optionally redirect to 404 or home
-    router.push('/work')
-  }
-  return found
-})
+const project = computed(() => getProject(route.params.slug))
+const next = computed(() => (project.value ? getNextProject(project.value.slug) : null))
 </script>
 
 <template>
-  <div class="container case-study-page" v-if="project">
-    <div class="case-header">
-      <h1 class="title">{{ project.title }}</h1>
-      <p class="subtitle">{{ project.subtitle }}</p>
-      <div class="tags">
-        <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-      </div>
+  <NotFound v-if="!project" />
+  <article v-else class="container page">
+    <p class="case__back"><RouterLink to="/work">← All work</RouterLink></p>
+
+    <header class="case__header">
+      <p class="label">{{ project.kind }}</p>
+      <h1>{{ project.title }}</h1>
+      <p class="lede muted">{{ project.subtitle }}</p>
+      <dl class="facts">
+        <div>
+          <dt>Status</dt>
+          <dd>{{ project.statusDetail }}</dd>
+        </div>
+        <div>
+          <dt>Stack</dt>
+          <dd>{{ project.stack.join(' · ') }}</dd>
+        </div>
+        <div>
+          <dt>Links</dt>
+          <dd>
+            <ul class="inline-list">
+              <li v-for="link in project.links" :key="link.href">
+                <a :href="link.href" target="_blank" rel="noopener noreferrer">{{ link.label }} ↗</a>
+              </li>
+            </ul>
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <figure class="case__hero">
+      <a :href="project.image.src" target="_blank" rel="noopener">
+        <img class="shot" :src="project.image.src" :alt="project.image.alt" fetchpriority="high" />
+      </a>
+      <figcaption>{{ project.image.caption }} Click to open full size.</figcaption>
+    </figure>
+
+    <div class="prose case__body">
+      <section v-for="section in project.sections" :key="section.heading">
+        <h2>{{ section.heading }}</h2>
+        <p v-for="(paragraph, index) in section.paragraphs" :key="index">{{ paragraph }}</p>
+        <figure v-for="figure in section.figures || []" :key="figure.src" class="case__figure">
+          <a :href="figure.src" target="_blank" rel="noopener">
+            <img class="shot" :src="figure.src" :alt="figure.alt" loading="lazy" decoding="async" />
+          </a>
+          <figcaption>{{ figure.caption }}</figcaption>
+        </figure>
+      </section>
     </div>
-    
-    <div class="hero-image">
-      <img :src="project.image" :alt="project.title" />
-    </div>
 
-    <article class="case-content">
-      <section v-if="project.sections.problem">
-        <h2>The Problem</h2>
-        <p v-html="project.sections.problem.replace(/\n\n/g, '<br><br>')"></p>
-      </section>
-
-      <section v-if="project.sections.whatIDid">
-        <h2>What I Did</h2>
-        <p v-html="project.sections.whatIDid.replace(/\n\n/g, '<br><br>')"></p>
-      </section>
-
-      <section v-if="project.sections.whatCameOfIt">
-        <h2>What Came Of It</h2>
-        <p v-html="project.sections.whatCameOfIt.replace(/\n\n/g, '<br><br>')"></p>
-      </section>
-
-      <section v-if="project.sections.nextTime">
-        <h2>Next Time</h2>
-        <p v-html="project.sections.nextTime.replace(/\n\n/g, '<br><br>')"></p>
-      </section>
-    </article>
-  </div>
+    <footer class="prose case__footer">
+      <p>Questions about how this was built? <a :href="`mailto:${site.email}`">{{ site.email }}</a></p>
+      <p class="case__next">
+        <RouterLink :to="`/work/${next.slug}`">Next: {{ next.title }} →</RouterLink>
+      </p>
+    </footer>
+  </article>
 </template>
 
 <style scoped>
-.case-study-page {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  max-width: 900px;
-  margin: 0 auto;
+.case__back {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-small);
 }
 
-.case-header {
-  margin-bottom: 3rem;
-  text-align: center;
+.case__header {
+  max-width: var(--measure);
+  margin-bottom: var(--space-5);
 }
 
-.title {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
+.case__hero {
+  margin-bottom: var(--space-6);
 }
 
-.subtitle {
-  font-size: 1.5rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
+.case__body section + section {
+  margin-top: var(--space-5);
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
+.case__figure {
+  margin-block: var(--space-4);
 }
 
-.tag {
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.35rem 1rem;
-  background-color: var(--bg-cream);
-  color: var(--accent-ochre);
-  border: 1px solid var(--accent-ochre-light);
-  border-radius: 9999px;
+.case__footer {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-rule);
 }
 
-.hero-image {
-  margin-bottom: 4rem;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  border: 1px solid var(--border-color);
-}
-
-.hero-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.case-content section {
-  margin-bottom: 3rem;
-}
-
-.case-content h2 {
-  font-size: 2rem;
-  color: var(--text-dark);
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid var(--accent-ochre);
-  display: inline-block;
-  padding-bottom: 0.25rem;
-}
-
-.case-content p {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: var(--text-muted);
+.case__next {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 600;
 }
 </style>
