@@ -1,21 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../pages/Home.vue'
-import Work from '../pages/Work.vue'
-import CaseStudy from '../pages/CaseStudy.vue'
-import About from '../pages/About.vue'
-import Contact from '../pages/Contact.vue'
-
-const routes = [
-  { path: '/', component: Home },
-  { path: '/work', component: Work },
-  { path: '/work/:slug', component: CaseStudy },
-  { path: '/about', component: About },
-  { path: '/contact', component: Contact },
-]
+import { routes, titleFor, scrollBehavior } from './routes'
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior,
+})
+
+router.afterEach((to) => {
+  document.title = titleFor(to)
 })
 
 export default router
