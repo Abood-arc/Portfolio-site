@@ -1,38 +1,24 @@
 <script setup>
+import { RouterView } from 'vue-router'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 </script>
 
 <template>
-  <div class="app-wrapper">
-    <Header />
-    <main class="main-content">
-      <router-view />
-    </main>
-    <Footer />
-  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <Header />
+  <main id="main" class="site-main" tabindex="-1">
+    <RouterView />
+  </main>
+  <Footer />
 </template>
 
-<style>
-.app-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+<style scoped>
+.site-main {
+  flex: 1 0 auto;
 }
 
-.main-content {
-  flex: 1;
-  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.site-main:focus {
+  outline: none;
 }
 </style>
