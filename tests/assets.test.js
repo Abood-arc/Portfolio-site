@@ -18,3 +18,21 @@ describe('site images', () => {
     expect(statSync(file).size).toBeLessThan(300 * 1024)
   })
 })
+
+const removed = [
+  'src/assets/qubix.jpg',
+  'src/assets/heartsync.jpg',
+  'src/assets/sublingo.jpg',
+  'src/assets/tassawur.jpg',
+  'src/assets/hero.png',
+  'src/assets/vite.svg',
+  'src/assets/vue.svg',
+  'src/components/HelloWorld.vue',
+  'public/icons.svg',
+]
+
+describe('scaffold leftovers and mislabeled images', () => {
+  it.each(removed)('%s is gone', (file) => {
+    expect(existsSync(file)).toBe(false)
+  })
+})

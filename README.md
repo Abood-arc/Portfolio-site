@@ -1,5 +1,17 @@
-# Vue 3 + Vite
+# abdullah-afaq.netlify.app
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Source for my portfolio: **https://abdullah-afaq.netlify.app**
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+Vue 3 + Vite with vue-router, built as a static site and deployed on Netlify. No UI framework, no animation library.
+
+- All case-study content lives in `src/data/projects.js`, so adding or editing a project is a data change.
+- Design tokens (colors, type scale, spacing) live in `src/style.css`.
+- `public/_redirects` sends every path to `index.html` so deep links work on Netlify.
+
+```bash
+npm install
+npm run dev          # local dev server
+npm test             # content, routing and page tests
+npm run build        # production build to dist/
+npm run check:dist   # post-build checks (images bundled, meta tags, redirects)
+```
