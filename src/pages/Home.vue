@@ -4,6 +4,7 @@ import { projects } from '../data/projects'
 import { site } from '../data/site'
 import portrait from '../assets/about.jpg'
 import WorkCard from '../components/WorkCard.vue'
+import SkillGroups from '../components/SkillGroups.vue'
 
 const [qubix, tassawur, ...rest] = projects
 const others = [tassawur, ...rest]
@@ -67,7 +68,16 @@ const liveStore = qubix.links[0]
     </div>
   </section>
 
-  <section class="section band home-contact" aria-labelledby="home-contact-title">
+  <section class="section band" aria-labelledby="skills-title">
+    <div class="container">
+      <p class="eyebrow">Skills</p>
+      <h2 id="skills-title">What I build with</h2>
+      <p class="muted skills-intro">Only tools I've shipped with in the projects above.</p>
+      <SkillGroups />
+    </div>
+  </section>
+
+  <section class="section home-contact" aria-labelledby="home-contact-title">
     <div class="container">
       <div class="prose">
         <h2 id="home-contact-title">Hiring for a full-stack role?</h2>
@@ -270,6 +280,10 @@ const liveStore = qubix.links[0]
   margin-top: 0.25rem;
   font-size: var(--text-small);
   color: var(--color-muted);
+}
+
+.skills-intro {
+  margin-bottom: var(--space-4);
 }
 
 .more-work__all {

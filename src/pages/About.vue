@@ -2,12 +2,15 @@
 import aboutPhoto from '../assets/about.jpg'
 import { layerMatrix } from '../data/layers'
 import { site } from '../data/site'
+import SkillGroups from '../components/SkillGroups.vue'
 </script>
 
 <template>
   <div class="container page">
     <div class="about">
-      <img class="about__photo" :src="aboutPhoto" alt="Portrait of Muhammad Abdullah Afaq" width="800" height="1067" />
+      <div class="about__frame">
+        <img class="about__photo" :src="aboutPhoto" alt="Portrait of Muhammad Abdullah Afaq" width="800" height="1067" />
+      </div>
       <div class="prose">
         <h1>About</h1>
         <p class="lede">I'm Abdullah, a full-stack developer based in Lahore. I studied Software Engineering at the University of Management and Technology, Lahore (2021–2025).</p>
@@ -16,6 +19,13 @@ import { site } from '../data/site'
         <p>The full history is in my <a :href="site.cv" target="_blank" rel="noopener">CV (PDF)</a>.</p>
       </div>
     </div>
+
+    <section class="skills-section" aria-labelledby="skills-title">
+      <p class="eyebrow">Skills</p>
+      <h2 id="skills-title">What I build with</h2>
+      <p class="muted">Grouped by layer. Every item here shipped in one of the four projects.</p>
+      <SkillGroups />
+    </section>
 
     <section class="matrix" aria-labelledby="matrix-title">
       <h2 id="matrix-title">What each project touched</h2>
@@ -53,13 +63,29 @@ import { site } from '../data/site'
   }
 }
 
+.about__frame {
+  width: 100%;
+  max-width: 20rem;
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  background: var(--color-band-deep);
+}
+
 .about__photo {
   width: 100%;
-  max-width: 18rem;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius-lg) - 6px);
   background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.skills-section {
+  margin-top: var(--space-6);
+}
+
+.skills-section .muted {
+  margin-bottom: var(--space-4);
 }
 
 .matrix {
@@ -70,7 +96,7 @@ import { site } from '../data/site'
   margin-top: var(--space-3);
   overflow-x: auto;
   border: 1px solid var(--color-rule);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
 }
 
 .matrix table {
