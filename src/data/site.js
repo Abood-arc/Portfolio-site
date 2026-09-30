@@ -18,7 +18,7 @@ export const site = {
     greeting: "Hi, I'm Abdullah Afaq",
     title: 'I take full-stack products from client brief to live system.',
     lede: 'Qubix, the Laravel/Vue ecommerce platform I built and deployed at jjbags.in, is live and taking real customer orders.',
-    photoAlt: 'Portrait of Muhammad Abdullah Afaq at his desk',
-    photoCaption: 'Muhammad Abdullah Afaq · Lahore',
+    portraitAlt: 'Portrait of Muhammad Abdullah Afaq at his desk',
+    photoCaption: 'Muhammad Abdullah Afaq · Full-stack developer · Lahore',
   },
 }

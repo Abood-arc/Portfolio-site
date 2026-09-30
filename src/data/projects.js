@@ -1,6 +1,9 @@
 import qubixStorefront from '../assets/projects/qubix-storefront.jpg'
 import qubixAdmin from '../assets/projects/qubix-admin.jpg'
 import qubixSaudi from '../assets/projects/qubix-saudi.jpg'
+import qubixAssistant from '../assets/projects/qubix-assistant.jpg'
+import qubixAutomation from '../assets/projects/qubix-automation.jpg'
+import qubixJbTheme from '../assets/projects/qubix-jb-theme.jpg'
 import tassawurImg from '../assets/projects/tassawur.jpg'
 import heartsyncImg from '../assets/projects/heartsync.jpg'
 import sublingoImg from '../assets/projects/sublingo.jpg'
@@ -25,6 +28,33 @@ export const projects = [
       alt: 'The jjbags.in storefront homepage with a jute bag banner',
       caption: 'The jjbags.in storefront, live in production.',
     },
+    gallery: [
+      {
+        label: 'Storefront',
+        src: qubixStorefront,
+        alt: 'The jjbags.in storefront homepage with a jute bag banner',
+        caption: 'The jjbags.in storefront, live in production.',
+      },
+      {
+        label: 'Assistant',
+        src: qubixAssistant,
+        alt: 'The JJ Bag Assistant chat open on jjbags.in, answering a question about jute bags',
+        caption: 'The chat assistant on jjbags.in, powered by Zanderio AI.',
+      },
+      {
+        label: 'Automation',
+        src: qubixAutomation,
+        alt: 'An n8n workflow with deploy over SSH, Caddy setup, credentials email and teardown steps',
+        caption: 'An n8n workflow with deploy, Caddy, credentials-email and teardown steps.',
+        fit: 'contain',
+      },
+      {
+        label: 'JB Bags',
+        src: qubixJbTheme,
+        alt: 'The JB Bags storefront with a Premium Jute Bags banner and featured products',
+        caption: 'The JB Bags storefront design.',
+      },
+    ],
     sections: [
       {
         heading: 'The problem',

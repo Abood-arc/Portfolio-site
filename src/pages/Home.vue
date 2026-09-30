@@ -4,10 +4,10 @@ import { projects } from '../data/projects'
 import { site } from '../data/site'
 import portrait from '../assets/about.jpg'
 import WorkCard from '../components/WorkCard.vue'
+import HeroShowcase from '../components/HeroShowcase.vue'
 import SkillGroups from '../components/SkillGroups.vue'
 
-const [qubix, tassawur, ...rest] = projects
-const others = [tassawur, ...rest]
+const [qubix, ...others] = projects
 const liveStore = qubix.links[0]
 </script>
 
@@ -15,38 +15,35 @@ const liveStore = qubix.links[0]
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__grid">
       <div class="hero__copy">
-        <p class="eyebrow">{{ site.hero.greeting }}</p>
-        <h1 id="hero-title" class="display hero__title">{{ site.hero.title }}</h1>
-        <p class="lede hero__lede">{{ site.hero.lede }}</p>
-        <p class="hero__actions">
+        <p v-reveal="0" class="eyebrow">{{ site.hero.greeting }}</p>
+        <h1 id="hero-title" v-reveal="1" class="display hero__title">{{ site.hero.title }}</h1>
+        <p v-reveal="2" class="lede hero__lede">{{ site.hero.lede }}</p>
+        <p v-reveal="3" class="hero__actions">
           <RouterLink to="/work" class="button">View my work</RouterLink>
           <RouterLink :to="`/work/${qubix.slug}`" class="button button--outline">Read the Qubix case study</RouterLink>
           <a :href="liveStore.href" target="_blank" rel="noopener noreferrer">Visit {{ liveStore.label }} ↗</a>
         </p>
+        <p v-reveal="4" class="hero__meta muted">{{ site.hero.photoCaption }}</p>
       </div>
 
       <div class="hero__art">
-        <span class="shape shape--sun" aria-hidden="true"></span>
-        <span class="shape shape--pill" aria-hidden="true"></span>
-        <span class="shape shape--tan" aria-hidden="true"></span>
-        <span class="shape shape--dot" aria-hidden="true"></span>
+        <span v-reveal="1" class="shape shape--sun" aria-hidden="true"></span>
+        <span v-reveal="2" class="shape shape--pill" aria-hidden="true"></span>
+        <span v-reveal="3" class="shape shape--tan" aria-hidden="true"></span>
+        <span v-reveal="4" class="shape shape--dot" aria-hidden="true"></span>
 
-        <svg class="hero__arc" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-          <path d="M40 34 C 70 22, 82 58, 46 70" />
-          <circle cx="40" cy="34" r="1.4" />
-          <circle cx="46" cy="70" r="1.4" />
+        <svg v-reveal="3" class="hero__arc" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <path d="M37 22 C 48 4, 78 6, 84 27" pathLength="1" />
+          <circle cx="37" cy="22" r="1.2" />
+          <circle cx="84" cy="27" r="1.2" />
         </svg>
 
-        <figure class="hero__portrait">
-          <img :src="portrait" :alt="site.hero.photoAlt" fetchpriority="high" />
+        <figure v-reveal="2" class="hero__portrait">
+          <img :src="portrait" :alt="site.hero.portraitAlt" fetchpriority="high" />
         </figure>
-        <figure class="hero__frame hero__frame--lead">
-          <img :src="qubix.image.src" :alt="qubix.image.alt" fetchpriority="high" />
-        </figure>
-        <figure class="hero__frame hero__frame--second">
-          <img :src="tassawur.image.src" alt="" />
-        </figure>
-        <p class="hero__caption muted">{{ site.hero.photoCaption }}</p>
+        <div v-reveal="3" class="hero__showcase">
+          <HeroShowcase :slides="qubix.gallery" />
+        </div>
       </div>
     </div>
   </section>
@@ -129,11 +126,16 @@ const liveStore = qubix.links[0]
   margin: var(--space-4) 0 0;
 }
 
+.hero__meta {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-small);
+}
+
 /* Art: flat shapes with real content sitting on them */
 .hero__art {
   position: relative;
   width: 100%;
-  max-width: 34rem;
+  max-width: 36rem;
   aspect-ratio: 1;
   margin-inline: auto;
 }
@@ -144,36 +146,36 @@ const liveStore = qubix.links[0]
 }
 
 .shape--sun {
-  top: 0;
-  right: -10%;
-  width: 82%;
+  top: 2%;
+  right: -12%;
+  width: 84%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--color-shape-soft);
 }
 
 .shape--pill {
-  left: -6%;
-  bottom: 4%;
-  width: 74%;
-  height: 30%;
+  left: -8%;
+  bottom: 2%;
+  width: 78%;
+  height: 26%;
   border-radius: 999px;
   background: var(--color-band-deep);
 }
 
 .shape--tan {
-  top: 8%;
-  left: 40%;
-  width: 11%;
+  top: 3%;
+  left: 47%;
+  width: 9%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--color-shape-tan);
 }
 
 .shape--dot {
-  right: 8%;
-  bottom: 30%;
-  width: 6%;
+  top: 12%;
+  right: 3%;
+  width: 4.5%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--color-ink);
@@ -196,9 +198,10 @@ const liveStore = qubix.links[0]
 
 .hero__portrait {
   position: absolute;
-  top: 18%;
-  left: 2%;
-  width: 46%;
+  z-index: 2;
+  top: 6%;
+  left: 0;
+  width: 36%;
   aspect-ratio: 1;
   overflow: hidden;
   border: 6px solid var(--color-bg);
@@ -214,43 +217,48 @@ const liveStore = qubix.links[0]
   object-position: 50% 30%;
 }
 
-.hero__frame {
+.hero__showcase {
   position: absolute;
-  overflow: hidden;
-  border: 1px solid var(--color-rule);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-soft);
-}
-
-.hero__frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-}
-
-.hero__frame--lead {
+  z-index: 1;
+  top: 30%;
   right: 0;
-  bottom: 12%;
-  width: 60%;
-  aspect-ratio: 16 / 10;
-  border-radius: 14px;
+  width: 80%;
 }
 
-.hero__frame--second {
-  top: 6%;
-  right: 4%;
-  width: 34%;
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
+/* Motion: the line draws itself once the hero is on screen.
+   Only hidden for users without a reduced-motion preference. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__arc path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1400ms cubic-bezier(0.65, 0, 0.35, 1) 500ms;
+  }
+
+  .hero__arc.is-visible path {
+    stroke-dashoffset: 0;
+  }
+
+  .hero__arc circle {
+    opacity: 0;
+    transition: opacity 400ms ease 500ms;
+  }
+
+  .hero__arc.is-visible circle {
+    opacity: 1;
+  }
 }
 
-.hero__caption {
-  position: absolute;
-  bottom: 0;
-  left: 2%;
-  margin: 0;
-  font-size: var(--text-small);
+.hero__arc.reveal {
+  transform: none;
+}
+
+.more-work__all {
+  margin-top: var(--space-2);
+  font-weight: 500;
+}
+
+.skills-intro {
+  margin-bottom: var(--space-4);
 }
 
 .proof__list {
@@ -284,12 +292,4 @@ const liveStore = qubix.links[0]
   color: var(--color-muted);
 }
 
-.skills-intro {
-  margin-bottom: var(--space-4);
-}
-
-.more-work__all {
-  margin-top: var(--space-2);
-  font-weight: 500;
-}
 </style>

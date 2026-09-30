@@ -30,7 +30,7 @@ const js = assets
 check(!js.includes('/src/assets/'), 'built JS references /src/assets/: an image is a string path instead of an import')
 
 const jpgs = assets.filter((f) => f.endsWith('.jpg'))
-check(jpgs.length === 7, `expected 7 bundled jpgs (6 project + about), found ${jpgs.length}: ${jpgs.join(', ')}`)
+check(jpgs.length === 10, `expected 10 bundled jpgs (9 project + about), found ${jpgs.length}: ${jpgs.join(', ')}`)
 for (const f of jpgs) {
   const kb = statSync(join(assetsDir, f)).size / 1024
   check(kb < 300, `${f} is ${Math.round(kb)} KB (limit 300)`)
