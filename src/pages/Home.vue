@@ -50,6 +50,15 @@ const liveStore = qubix.links[0]
     </div>
   </section>
 
+  <section class="band proof" aria-label="Proof in numbers">
+    <ul class="container proof__list">
+      <li v-for="item in site.proof" :key="item.label" class="proof__item">
+        <span class="proof__value">{{ item.value }}</span>
+        <span class="proof__label">{{ item.label }}</span>
+      </li>
+    </ul>
+  </section>
+
   <section class="section more-work" aria-labelledby="more-work-title">
     <div class="container">
       <h2 id="more-work-title">Other projects</h2>
@@ -59,12 +68,14 @@ const liveStore = qubix.links[0]
   </section>
 
   <section class="section band home-contact" aria-labelledby="home-contact-title">
-    <div class="container prose">
-      <h2 id="home-contact-title">Hiring for a full-stack role?</h2>
-      <p>
-        Email me at <a :href="`mailto:${site.email}`">{{ site.email }}</a>,
-        or grab my <a :href="site.cv" target="_blank" rel="noopener">CV (PDF)</a>.
-      </p>
+    <div class="container">
+      <div class="prose">
+        <h2 id="home-contact-title">Hiring for a full-stack role?</h2>
+        <p>
+          Email me at <a :href="`mailto:${site.email}`">{{ site.email }}</a>,
+          or grab my <a :href="site.cv" target="_blank" rel="noopener">CV (PDF)</a>.
+        </p>
+      </div>
     </div>
   </section>
 </template>
@@ -228,6 +239,37 @@ const liveStore = qubix.links[0]
   left: 2%;
   margin: 0;
   font-size: var(--text-small);
+}
+
+.proof__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4) var(--space-3);
+  margin-block: 0;
+  padding: var(--space-5) 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .proof__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.proof__value {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-accent);
+}
+
+.proof__label {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: var(--text-small);
+  color: var(--color-muted);
 }
 
 .more-work__all {

@@ -8,6 +8,12 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/abdullah-afaq-822607282',
   cv: '/Abdullah_FS_CV.pdf',
   url: 'https://abdullah-afaq.netlify.app',
+  proof: [
+    { value: '356', label: 'orders handled on jjbags.in so far' },
+    { value: '2', label: 'live storefronts: India and Saudi Arabia' },
+    { value: '0', label: 'downtime in the first 45+ days' },
+    { value: '4', label: 'projects across web, mobile and AI' },
+  ],
   hero: {
     greeting: "Hi, I'm Abdullah Afaq",
     title: 'I take full-stack products from client brief to live system.',

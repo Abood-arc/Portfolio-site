@@ -24,7 +24,9 @@ defineProps({
       </component>
       <p class="work-card__subtitle">{{ project.subtitle }}</p>
       <p class="work-card__summary">{{ project.summary }}</p>
-      <p class="work-card__stack">{{ project.stack.join(' · ') }}</p>
+      <ul class="work-card__stack" aria-label="Stack">
+        <li v-for="tech in project.stack" :key="tech" class="chip">{{ tech }}</li>
+      </ul>
       <RouterLink :to="`/work/${project.slug}`" class="work-card__more">
         Read the case study<span class="visually-hidden">: {{ project.title }}</span> →
       </RouterLink>
@@ -34,8 +36,18 @@ defineProps({
 
 <style scoped>
 .work-card {
-  padding-block: var(--space-5);
-  border-top: 1px solid var(--color-rule);
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.work-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-shape-tan);
+  box-shadow: var(--shadow-soft);
 }
 
 .work-card__media {
@@ -48,7 +60,7 @@ defineProps({
   object-fit: cover;
   object-position: top;
   border: 1px solid var(--color-rule);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
 }
 
@@ -77,8 +89,12 @@ defineProps({
 }
 
 .work-card__stack {
-  font-size: var(--text-small);
-  color: var(--color-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: var(--space-2) 0 var(--space-3);
+  padding: 0;
+  list-style: none;
 }
 
 .work-card__more {
