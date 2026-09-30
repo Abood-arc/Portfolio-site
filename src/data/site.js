@@ -9,10 +9,10 @@ export const site = {
   cv: '/Abdullah_FS_CV.pdf',
   url: 'https://abdullah-afaq.netlify.app',
   proof: [
-    { value: '356', label: 'orders handled on jjbags.in so far' },
-    { value: '2', label: 'live storefronts: India and Saudi Arabia' },
-    { value: '0', label: 'downtime in the first 45+ days' },
-    { value: '4', label: 'projects across web, mobile and AI' },
+    { value: 356, label: 'orders handled on jjbags.in so far' },
+    { value: 3, label: 'live stores shipped' },
+    { value: 0, label: 'downtime in the first 45+ days' },
+    { value: 4, label: 'projects across web, mobile and AI' },
   ],
   hero: {
     greeting: "Hi, I'm Abdullah Afaq",

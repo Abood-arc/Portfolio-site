@@ -4,7 +4,7 @@ import { site } from '../data/site'
 
 <template>
   <div class="container page contact">
-    <div class="contact__lead">
+    <div v-reveal class="contact__lead">
       <p class="eyebrow">Get in touch</p>
       <h1 class="display">Contact</h1>
       <p class="lede">Want to talk about how I'd approach your product? Email me.</p>
@@ -14,7 +14,7 @@ import { site } from '../data/site'
         <a class="button button--outline" :href="site.cv" target="_blank" rel="noopener">Download CV</a>
       </p>
     </div>
-    <div>
+    <div v-reveal="2">
       <dl class="facts card">
         <div>
           <dt>Based in</dt>

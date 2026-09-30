@@ -18,10 +18,9 @@ describe('hero showcase', () => {
     expect(w.findAll('.showcase__tab')[1].attributes('aria-current')).toBe('true')
   })
 
-  it('does not autoplay or show a pause button under reduced motion', () => {
+  it('does not autoplay under reduced motion', () => {
     window.matchMedia = () => ({ matches: true, addEventListener() {}, removeEventListener() {} })
     const w = mount(HeroShowcase, { props: { slides } })
-    expect(w.find('.showcase__pause').exists()).toBe(false)
     expect(w.classes()).toContain('is-static')
   })
 })

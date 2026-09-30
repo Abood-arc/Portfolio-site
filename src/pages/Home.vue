@@ -6,6 +6,7 @@ import portrait from '../assets/about.jpg'
 import WorkCard from '../components/WorkCard.vue'
 import HeroShowcase from '../components/HeroShowcase.vue'
 import SkillGroups from '../components/SkillGroups.vue'
+import CountUp from '../components/CountUp.vue'
 
 const [qubix, ...others] = projects
 const liveStore = qubix.links[0]
@@ -27,10 +28,10 @@ const liveStore = qubix.links[0]
       </div>
 
       <div class="hero__art">
-        <span v-reveal="1" class="shape shape--sun" aria-hidden="true"></span>
-        <span v-reveal="2" class="shape shape--pill" aria-hidden="true"></span>
-        <span v-reveal="3" class="shape shape--tan" aria-hidden="true"></span>
-        <span v-reveal="4" class="shape shape--dot" aria-hidden="true"></span>
+        <span v-reveal="1" v-parallax="0.12" class="shape shape--sun" aria-hidden="true"></span>
+        <span v-reveal="2" v-parallax="-0.06" class="shape shape--pill" aria-hidden="true"></span>
+        <span v-reveal="3" v-parallax="0.28" class="shape shape--tan" aria-hidden="true"></span>
+        <span v-reveal="4" v-parallax="0.2" class="shape shape--dot" aria-hidden="true"></span>
 
         <svg v-reveal="3" class="hero__arc" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
           <path d="M37 22 C 48 4, 78 6, 84 27" pathLength="1" />
@@ -51,7 +52,7 @@ const liveStore = qubix.links[0]
   <section class="band proof" aria-label="Proof in numbers">
     <ul class="container proof__list">
       <li v-for="(item, i) in site.proof" :key="item.label" v-reveal="i" class="proof__item">
-        <span class="proof__value">{{ item.value }}</span>
+        <span class="proof__value"><CountUp :value="item.value" /></span>
         <span class="proof__label">{{ item.label }}</span>
       </li>
     </ul>
@@ -59,7 +60,7 @@ const liveStore = qubix.links[0]
 
   <section class="section more-work" aria-labelledby="more-work-title">
     <div class="container">
-      <h2 id="more-work-title">Other projects</h2>
+      <h2 id="more-work-title" v-reveal>Other projects</h2>
       <div v-for="project in others" :key="project.slug" v-reveal>
         <WorkCard :project="project" />
       </div>
@@ -69,9 +70,9 @@ const liveStore = qubix.links[0]
 
   <section class="section band" aria-labelledby="skills-title">
     <div class="container">
-      <p class="eyebrow">Skills</p>
-      <h2 id="skills-title">What I build with</h2>
-      <p class="muted skills-intro">Only tools I've shipped with in the projects above.</p>
+      <p v-reveal class="eyebrow">Skills</p>
+      <h2 id="skills-title" v-reveal="1">What I build with</h2>
+      <p v-reveal="2" class="muted skills-intro">Only tools I've shipped with in the projects above.</p>
       <SkillGroups />
     </div>
   </section>
@@ -143,6 +144,7 @@ const liveStore = qubix.links[0]
 .shape {
   position: absolute;
   display: block;
+  translate: 0 var(--py, 0px);
 }
 
 .shape--sun {

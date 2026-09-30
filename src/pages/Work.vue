@@ -7,7 +7,7 @@ const [lead, ...rest] = projects
 
 <template>
   <div class="container page">
-    <header class="work-intro">
+    <header v-reveal class="work-intro">
       <h1>Work</h1>
       <p class="lede">
         Four projects, each written up the same way: the problem, what I did, what came of it, and what I'd do next time.

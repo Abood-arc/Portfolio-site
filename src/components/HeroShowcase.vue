@@ -3,18 +3,16 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   slides: { type: Array, required: true },
-  interval: { type: Number, default: 5500 },
+  interval: { type: Number, default: 2750 },
 })
 
 const index = ref(0)
 const motionOk = ref(false)
-const userPaused = ref(false)
-const hovering = ref(false)
-const focused = ref(false)
 const running = ref(false)
 let timer = 0
 
-const autoplay = computed(() => motionOk.value && !userPaused.value && !hovering.value && !focused.value)
+// Keeps moving after a click: choosing a tab only restarts the countdown from that slide.
+const autoplay = computed(() => motionOk.value)
 const current = computed(() => props.slides[index.value])
 
 function stop() {
@@ -57,10 +55,6 @@ onBeforeUnmount(stop)
     role="group"
     aria-roledescription="carousel"
     aria-label="Qubix screenshots"
-    @mouseenter="hovering = true"
-    @mouseleave="hovering = false"
-    @focusin="focused = true"
-    @focusout="focused = false"
   >
     <div class="showcase__frame" :aria-live="autoplay ? 'off' : 'polite'">
       <figure
@@ -87,15 +81,6 @@ onBeforeUnmount(stop)
       >
         <span class="showcase__bar" aria-hidden="true"></span>
         <span class="showcase__label">{{ slide.label }}</span>
-      </button>
-      <button
-        v-if="motionOk"
-        type="button"
-        class="showcase__pause"
-        :aria-pressed="userPaused ? 'true' : 'false'"
-        @click="userPaused = !userPaused"
-      >
-        {{ userPaused ? 'Play' : 'Pause' }}
       </button>
     </div>
 
@@ -194,7 +179,7 @@ onBeforeUnmount(stop)
   transition: transform var(--interval) linear;
 }
 
-/* Paused, hovered or reduced motion: the active tab is simply underlined */
+/* Reduced motion (no autoplay): the active tab is simply underlined */
 .showcase.is-static .showcase__tab.is-active .showcase__bar::after {
   transform: scaleX(1);
 }
@@ -210,25 +195,6 @@ onBeforeUnmount(stop)
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-}
-
-.showcase__pause {
-  flex: none;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid var(--color-rule);
-  border-radius: 999px;
-  background: var(--color-bg);
-  color: var(--color-muted);
-  font: inherit;
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 150ms ease, border-color 150ms ease;
-}
-
-.showcase__pause:hover {
-  border-color: var(--color-text);
-  color: var(--color-text);
 }
 
 .showcase__caption {

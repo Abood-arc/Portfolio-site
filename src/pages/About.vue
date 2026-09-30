@@ -8,10 +8,10 @@ import SkillGroups from '../components/SkillGroups.vue'
 <template>
   <div class="container page">
     <div class="about">
-      <div class="about__frame">
+      <div v-reveal class="about__frame">
         <img class="about__photo" :src="aboutPhoto" alt="Portrait of Muhammad Abdullah Afaq" width="800" height="1067" />
       </div>
-      <div class="prose">
+      <div v-reveal="1" class="prose">
         <h1>About</h1>
         <p class="lede">I'm Abdullah, a full-stack developer based in Lahore. I studied Software Engineering at the University of Management and Technology, Lahore (2021–2025).</p>
         <p>Most recently I was a machine learning intern at FlyRank AI (Jul–Sep 2026), building a pipeline that predicts content-performance decline across 30+ clients. Before that I was a software engineer at Digital Labs AI (Jan–Mar 2026), building REST APIs and Docker deployments for client projects.</p>
@@ -21,16 +21,20 @@ import SkillGroups from '../components/SkillGroups.vue'
     </div>
 
     <section class="skills-section" aria-labelledby="skills-title">
-      <p class="eyebrow">Skills</p>
-      <h2 id="skills-title">What I build with</h2>
-      <p class="muted">Grouped by layer. Every item here shipped in one of the four projects.</p>
+      <div v-reveal>
+        <p class="eyebrow">Skills</p>
+        <h2 id="skills-title">What I build with</h2>
+        <p class="muted">Grouped by layer. Every item here shipped in one of the four projects.</p>
+      </div>
       <SkillGroups />
     </section>
 
     <section class="matrix" aria-labelledby="matrix-title">
-      <h2 id="matrix-title">What each project touched</h2>
-      <p class="muted">The four projects, broken down by layer. A dash means that project didn't need the layer.</p>
-      <div class="matrix__scroll" role="region" aria-labelledby="matrix-title" tabindex="0">
+      <div v-reveal>
+        <h2 id="matrix-title">What each project touched</h2>
+        <p class="muted">The four projects, broken down by layer. A dash means that project didn't need the layer.</p>
+      </div>
+      <div v-reveal="1" class="matrix__scroll" role="region" aria-labelledby="matrix-title" tabindex="0">
         <table>
           <thead>
             <tr>

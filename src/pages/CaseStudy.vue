@@ -16,12 +16,12 @@ const next = computed(() => (project.value ? getNextProject(project.value.slug) 
     <p class="case__back"><RouterLink to="/work">← All work</RouterLink></p>
 
     <header class="case__header">
-      <div class="case__title">
+      <div v-reveal class="case__title">
         <p class="eyebrow">{{ project.kind }}</p>
         <h1 class="display">{{ project.title }}</h1>
         <p class="lede muted">{{ project.subtitle }}</p>
       </div>
-      <dl class="facts card">
+      <dl v-reveal="2" class="facts card">
         <div>
           <dt>Status</dt>
           <dd>{{ project.statusDetail }}</dd>
@@ -47,7 +47,7 @@ const next = computed(() => (project.value ? getNextProject(project.value.slug) 
       </dl>
     </header>
 
-    <figure class="case__hero">
+    <figure v-reveal class="case__hero">
       <a :href="project.image.src" target="_blank" rel="noopener">
         <img class="shot" :src="project.image.src" :alt="project.image.alt" fetchpriority="high" />
       </a>
@@ -55,7 +55,7 @@ const next = computed(() => (project.value ? getNextProject(project.value.slug) 
     </figure>
 
     <div class="prose case__body">
-      <section v-for="section in project.sections" :key="section.heading">
+      <section v-for="section in project.sections" :key="section.heading" v-reveal>
         <h2>{{ section.heading }}</h2>
         <p v-for="(paragraph, index) in section.paragraphs" :key="index">{{ paragraph }}</p>
         <figure v-for="figure in section.figures || []" :key="figure.src" class="case__figure">
@@ -67,7 +67,7 @@ const next = computed(() => (project.value ? getNextProject(project.value.slug) 
       </section>
     </div>
 
-    <footer class="prose case__footer">
+    <footer v-reveal class="prose case__footer">
       <p>Questions about how this was built? <a :href="`mailto:${site.email}`">{{ site.email }}</a></p>
       <p class="case__next">
         <RouterLink :to="`/work/${next.slug}`">Next: {{ next.title }} →</RouterLink>
