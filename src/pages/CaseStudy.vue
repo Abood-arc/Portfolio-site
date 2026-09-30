@@ -16,17 +16,23 @@ const next = computed(() => (project.value ? getNextProject(project.value.slug) 
     <p class="case__back"><RouterLink to="/work">← All work</RouterLink></p>
 
     <header class="case__header">
-      <p class="label">{{ project.kind }}</p>
-      <h1>{{ project.title }}</h1>
-      <p class="lede muted">{{ project.subtitle }}</p>
-      <dl class="facts">
+      <div class="case__title">
+        <p class="eyebrow">{{ project.kind }}</p>
+        <h1 class="display">{{ project.title }}</h1>
+        <p class="lede muted">{{ project.subtitle }}</p>
+      </div>
+      <dl class="facts card">
         <div>
           <dt>Status</dt>
           <dd>{{ project.statusDetail }}</dd>
         </div>
         <div>
           <dt>Stack</dt>
-          <dd>{{ project.stack.join(' · ') }}</dd>
+          <dd>
+            <ul class="case__stack">
+              <li v-for="tech in project.stack" :key="tech" class="chip">{{ tech }}</li>
+            </ul>
+          </dd>
         </div>
         <div>
           <dt>Links</dt>
@@ -77,8 +83,40 @@ const next = computed(() => (project.value ? getNextProject(project.value.slug) 
 }
 
 .case__header {
-  max-width: var(--measure);
+  display: grid;
+  gap: var(--space-4);
+  align-items: end;
   margin-bottom: var(--space-5);
+}
+
+@media (min-width: 60rem) {
+  .case__header {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--space-5);
+  }
+}
+
+.case__header .facts {
+  margin: 0;
+  padding-block: var(--space-2);
+  background: var(--color-band);
+}
+
+.case__header .facts > div:last-child {
+  border-bottom: 0;
+}
+
+.case__header .facts > div:first-child {
+  padding-top: 0.5rem;
+}
+
+.case__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .case__hero {
@@ -95,8 +133,10 @@ const next = computed(() => (project.value ? getNextProject(project.value.slug) 
 
 .case__footer {
   margin-top: var(--space-6);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--color-rule);
+  padding: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-band);
 }
 
 .case__next {
