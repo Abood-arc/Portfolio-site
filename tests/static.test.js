@@ -18,7 +18,7 @@ describe('document head', () => {
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />')
   })
 
-  it('loads only the two Identity Kit fonts, from index.html not CSS', () => {
+  it('loads only the two site fonts, from index.html not CSS', () => {
     expect(html).toContain('family=Inter:wght@400;500;600&family=Lora:wght@600')
     expect(css).not.toContain('@import')
   })
@@ -29,14 +29,16 @@ describe('document head', () => {
 })
 
 describe('design tokens', () => {
-  it('defines the six Identity Kit colors', () => {
-    for (const hex of ['#FAF6EF', '#211D17', '#6E5B45', '#A8763E', '#8B5E2E', '#6E4A22']) {
+  it('defines the warm editorial palette', () => {
+    for (const hex of ['#FAF6EF', '#1C1712', '#5E4C38', '#A64B22', '#8A3E1B', '#6B2F13']) {
       expect(css).toContain(hex)
     }
   })
 
-  it('has no shadows, gradients or keyframe animations', () => {
-    expect(css).not.toMatch(/box-shadow|gradient|@keyframes/)
+  it('keeps shapes flat: shadows only via the shadow token, no gradients or keyframes', () => {
+    expect(css).not.toMatch(/gradient|@keyframes/)
+    const shadows = css.match(/box-shadow:[^;]+;/g) || []
+    for (const rule of shadows) expect(rule).toContain('var(--shadow-soft)')
   })
 })
 

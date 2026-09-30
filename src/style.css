@@ -1,20 +1,30 @@
 :root {
-  /* Identity Kit palette. These hex values are fixed. */
+  /* Warm editorial palette. Hex values live here and nowhere else. */
   --color-bg: #FAF6EF;
-  --color-text: #211D17;
-  --color-muted: #6E5B45;
-  --color-accent: #A8763E; /* 3.66:1, rules/indicators/large text only */
-  --color-link: #8B5E2E;
-  --color-link-hover: #6E4A22;
+  --color-text: #1C1712;
+  --color-muted: #5E4C38;
+  --color-accent: #A64B22; /* terracotta, 5.3:1 on bg: safe for text */
+  --color-link: #8A3E1B;
+  --color-link-hover: #6B2F13;
   /* Derived neutrals: hairlines, image backdrops, selection */
   --color-rule: #E4DACB;
   --color-surface: #F2EBDF;
   --color-selection: #EADBC4;
+  /* Section bands and hero shapes */
+  --color-band: #F1E8D8;
+  --color-band-deep: #E6D6BB;
+  --color-shape-soft: #EFE4D0;
+  --color-shape-tan: #D6B98C;
+  --color-ink: #1C1712;
+  --color-on-ink: #FAF6EF;
+  --color-on-ink-muted: #CDBFA9;
+  --shadow-soft: 0 1px 2px rgba(60, 40, 20, 0.06), 0 14px 32px -14px rgba(60, 40, 20, 0.22);
 
   --font-heading: 'Lora', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  /* Identity Kit type scale: H1 48, H2 32, H3 22, body 17, label 13 */
+  /* Type scale */
+  --text-display: clamp(2.75rem, 1.7rem + 4.4vw, 4.75rem);
   --text-h1: clamp(2.25rem, 1.6rem + 2.6vw, 3rem);
   --text-h2: clamp(1.625rem, 1.35rem + 1.2vw, 2rem);
   --text-h3: 1.375rem;
@@ -35,6 +45,7 @@
   --wide: 68rem;
   --gutter: clamp(1rem, 4vw, 2rem);
   --radius: 4px;
+  --radius-lg: 20px;
 
   color-scheme: light;
 }
@@ -173,23 +184,37 @@ a:hover {
   border: 1px solid var(--color-rule);
   border-radius: var(--radius);
   background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
 }
 
-/* The only button style on the site */
+/* Buttons: solid (default) and outline */
 .button {
   display: inline-block;
   padding: 0.75rem 1.25rem;
+  border: 1px solid var(--color-text);
   border-radius: var(--radius);
   background: var(--color-text);
   color: var(--color-bg);
   font-size: var(--text-small);
   font-weight: 600;
   text-decoration: none;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
 }
 
 .button:hover {
+  border-color: var(--color-link-hover);
   background: var(--color-link-hover);
+  color: var(--color-bg);
+}
+
+.button--outline {
+  background: transparent;
+  color: var(--color-text);
+}
+
+.button--outline:hover {
+  border-color: var(--color-text);
+  background: var(--color-text);
   color: var(--color-bg);
 }
 
@@ -234,6 +259,80 @@ a:hover {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* Section rhythm: full-width bands alternate with the page background */
+.section {
+  padding-block: var(--space-6);
+}
+
+.band {
+  background: var(--color-band);
+  border-block: 1px solid var(--color-rule);
+}
+
+.band--ink {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+.band--ink h2,
+.band--ink h3 {
+  color: var(--color-on-ink);
+}
+
+.band--ink .muted {
+  color: var(--color-on-ink-muted);
+}
+
+.band--ink a:not(.button) {
+  color: var(--color-on-ink);
+}
+
+.band--ink .button {
+  border-color: var(--color-on-ink);
+  background: var(--color-on-ink);
+  color: var(--color-ink);
+}
+
+.band--ink .button:hover {
+  background: var(--color-band-deep);
+  border-color: var(--color-band-deep);
+  color: var(--color-ink);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-accent);
+}
+
+.display {
+  font-size: var(--text-display);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+/* Tags and cards */
+.chip {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 999px;
+  background: var(--color-bg);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.card {
+  padding: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
 }
 
 /* Accessibility helpers */
