@@ -14,8 +14,10 @@ const [lead, ...rest] = projects
         Qubix is the one with real customers.
       </p>
     </header>
-    <WorkCard :project="lead" variant="lead" heading-level="h2" />
-    <WorkCard v-for="project in rest" :key="project.slug" :project="project" heading-level="h2" />
+    <div v-reveal><WorkCard :project="lead" variant="lead" heading-level="h2" /></div>
+    <div v-for="project in rest" :key="project.slug" v-reveal>
+      <WorkCard :project="project" heading-level="h2" />
+    </div>
   </div>
 </template>
 

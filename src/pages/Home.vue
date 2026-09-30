@@ -53,7 +53,7 @@ const liveStore = qubix.links[0]
 
   <section class="band proof" aria-label="Proof in numbers">
     <ul class="container proof__list">
-      <li v-for="item in site.proof" :key="item.label" class="proof__item">
+      <li v-for="(item, i) in site.proof" :key="item.label" v-reveal="i" class="proof__item">
         <span class="proof__value">{{ item.value }}</span>
         <span class="proof__label">{{ item.label }}</span>
       </li>
@@ -63,7 +63,9 @@ const liveStore = qubix.links[0]
   <section class="section more-work" aria-labelledby="more-work-title">
     <div class="container">
       <h2 id="more-work-title">Other projects</h2>
-      <WorkCard v-for="project in others" :key="project.slug" :project="project" />
+      <div v-for="project in others" :key="project.slug" v-reveal>
+        <WorkCard :project="project" />
+      </div>
       <p class="more-work__all"><RouterLink to="/work">All work →</RouterLink></p>
     </div>
   </section>
@@ -79,7 +81,7 @@ const liveStore = qubix.links[0]
 
   <section class="section home-contact" aria-labelledby="home-contact-title">
     <div class="container">
-      <div class="prose">
+      <div v-reveal class="prose">
         <h2 id="home-contact-title">Hiring for a full-stack role?</h2>
         <p>
           Email me at <a :href="`mailto:${site.email}`">{{ site.email }}</a>,

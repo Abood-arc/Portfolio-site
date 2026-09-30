@@ -4,7 +4,7 @@ import { skillGroups } from '../data/skills'
 
 <template>
   <div class="skills">
-    <div v-for="group in skillGroups" :key="group.title" class="card skills__group">
+    <div v-for="(group, i) in skillGroups" :key="group.title" v-reveal="i % 3" class="card skills__group">
       <h3 class="skills__title">{{ group.title }}</h3>
       <ul class="skills__list">
         <li v-for="item in group.items" :key="item" class="chip">{{ item }}</li>
