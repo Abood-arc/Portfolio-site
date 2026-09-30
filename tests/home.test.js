@@ -2,12 +2,18 @@ import { describe, it, expect } from 'vitest'
 import { renderAt } from './helpers'
 
 describe('home page', () => {
-  it("leads with the owner's own bio line, not the internal proof statement", async () => {
+  it('leads with the proof headline and never shows the internal proof statement', async () => {
     const w = await renderAt('/')
-    expect(w.get('h1').text()).toBe("I built an ecommerce site for a client that's live and handling real customer orders.")
-    expect(w.text()).toContain("Took their requirements, designed it, shipped it, and I'm maintaining it.")
+    expect(w.get('h1').text()).toBe('I take full-stack products from client brief to live system.')
+    expect(w.get('.hero').text()).toContain('Qubix')
     expect(w.text()).not.toContain('hiring manager')
     expect(w.get('.hero').text()).toContain('Muhammad Abdullah Afaq')
+  })
+
+  it('shows the owner photo and project glimpses in the hero', async () => {
+    const w = await renderAt('/')
+    expect(w.get('.hero__portrait img').attributes('alt')).toContain('Muhammad Abdullah Afaq')
+    expect(w.findAll('.hero__frame img').length).toBe(2)
   })
 
   it('points straight at the Qubix case study and the live store', async () => {
@@ -15,7 +21,7 @@ describe('home page', () => {
     const hero = w.get('.hero')
     expect(hero.find('a[href="/work/qubix"]').exists()).toBe(true)
     expect(hero.find('a[href="https://jjbags.in"]').exists()).toBe(true)
-    expect(hero.find('img').attributes('alt')).toContain('jjbags.in')
+    expect(hero.get('.hero__frame--lead img').attributes('alt')).toContain('jjbags.in')
   })
 
   it('lists the other three projects and ends with an email ask', async () => {

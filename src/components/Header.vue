@@ -10,7 +10,7 @@ import { RouterLink } from 'vue-router'
         <ul class="nav">
           <li><RouterLink to="/work" class="nav__link">Work</RouterLink></li>
           <li><RouterLink to="/about" class="nav__link">About</RouterLink></li>
-          <li><RouterLink to="/contact" class="nav__link">Contact</RouterLink></li>
+          <li><RouterLink to="/contact" class="button nav__cta">Contact</RouterLink></li>
         </ul>
       </nav>
     </div>
@@ -45,6 +45,7 @@ import { RouterLink } from 'vue-router'
 
 .nav {
   display: flex;
+  align-items: center;
   gap: clamp(1rem, 4vw, 2rem);
   margin: 0;
   padding: 0;
@@ -67,5 +68,9 @@ import { RouterLink } from 'vue-router'
 
 .nav__link.router-link-active {
   border-bottom-color: var(--color-accent);
+}
+
+.nav__cta {
+  padding: 0.5rem 1rem;
 }
 </style>
