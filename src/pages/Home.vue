@@ -7,6 +7,7 @@ import WorkCard from '../components/WorkCard.vue'
 import HeroShowcase from '../components/HeroShowcase.vue'
 import SkillGroups from '../components/SkillGroups.vue'
 import CountUp from '../components/CountUp.vue'
+import ExperienceSection from '../components/ExperienceSection.vue'
 
 const [qubix, ...others] = projects
 const liveStore = qubix.links[0]
@@ -57,6 +58,8 @@ const liveStore = qubix.links[0]
       </li>
     </ul>
   </section>
+
+  <ExperienceSection />
 
   <section class="section more-work" aria-labelledby="more-work-title">
     <div class="container">

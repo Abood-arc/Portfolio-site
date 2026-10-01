@@ -14,7 +14,7 @@ import SkillGroups from '../components/SkillGroups.vue'
       <div v-reveal="1" class="prose">
         <h1>About</h1>
         <p class="lede">I'm Abdullah, a full-stack developer based in Lahore. I studied Software Engineering at the University of Management and Technology, Lahore (2021–2025).</p>
-        <p>Most recently I was a machine learning intern at FlyRank AI (Jul–Sep 2026), building a pipeline that predicts content-performance decline across 30+ clients. Before that I was a software engineer at Digital Labs AI (Jan–Mar 2026), building REST APIs and Docker deployments for client projects.</p>
+        <p>Since January 2026 I've been a software engineer at Digital Labs AI, building Vue and Laravel features and the Docker deployments that ship them. From July to September 2026 I was also a machine learning intern at FlyRank AI, building a pipeline that predicts content-performance decline across 30+ clients.</p>
         <p>Qubix is the project with real customers: a client's store I took from requirements to production and still maintain. The other three are personal projects, and each case study says plainly where it ended up.</p>
         <p>The full history is in my <a :href="site.cv" target="_blank" rel="noopener">CV (PDF)</a>.</p>
       </div>
