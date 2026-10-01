@@ -15,7 +15,20 @@ describe('experience data', () => {
 
   it('has education and certifications', () => {
     expect(education).toHaveLength(2)
-    expect(certifications.map((c) => c.issuer)).toEqual(['FlyRank AI', 'IBM, Coursera', 'Udacity'])
+    expect(certifications.map((c) => c.issuer)).toEqual(['Anthropic Academy', 'IBM, Coursera', 'Udacity'])
+  })
+
+  it('links each certification title to its own verification page', () => {
+    const hrefs = Object.fromEntries(certifications.map((c) => [c.title, c.href]))
+    expect(hrefs).toEqual({
+      'Introduction to Model Context Protocol': 'https://verify.skilljar.com/c/42tdzhmr2t72',
+      'Developing Back-End Apps with Node.js and Express': 'https://www.coursera.org/account/accomplishments/verify/YEWMIFSNT7ZV',
+      'AWS AI Practitioner Challenge': 'https://www.udacity.com/certificate/e/796ad5a6-2fbe-11f1-9a56-6b95b1ffe4d0',
+    })
+  })
+
+  it('no longer lists the FlyRank internship as a certification', () => {
+    expect(certifications.some((c) => /flyrank/i.test(c.issuer + c.title))).toBe(false)
   })
 })
 
@@ -40,6 +53,24 @@ describe('experience section on the home page', () => {
     expect(titles).toEqual(['Education', 'Certifications'])
     expect(w.get('.credentials').text()).toContain('University of Management and Technology')
     expect(w.get('.credentials').text()).toContain('AWS AI Practitioner Challenge')
+  })
+
+  it('renders each certification title as the link, opening safely in a new tab', async () => {
+    const w = await renderAt('/')
+    const links = w.findAll('.credentials__link')
+    expect(links).toHaveLength(3)
+    expect(links[0].text()).toContain('Introduction to Model Context Protocol')
+    expect(links[0].attributes('href')).toBe('https://verify.skilljar.com/c/42tdzhmr2t72')
+    for (const a of links) {
+      expect(a.attributes('target')).toBe('_blank')
+      expect(a.attributes('rel')).toContain('noopener')
+    }
+  })
+
+  it('gives every role, including the last one, a rail line to animate', async () => {
+    const w = await renderAt('/')
+    expect(w.findAll('.timeline__item')).toHaveLength(2)
+    expect(w.findAll('.timeline__line')).toHaveLength(2)
   })
 
   it('does not publish the FlyRank credential ID', async () => {

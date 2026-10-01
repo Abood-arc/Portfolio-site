@@ -1,5 +1,6 @@
 <script setup>
 import { experience, education, certifications } from '../data/experience'
+import Icon from './Icon.vue'
 </script>
 
 <template>
@@ -17,6 +18,7 @@ import { experience, education, certifications } from '../data/experience'
           v-reveal="i"
           class="timeline__item"
           :class="{ 'is-current': job.current }"
+          :style="{ '--i': i }"
         >
           <div class="timeline__when">
             <p class="timeline__dates">
@@ -60,7 +62,12 @@ import { experience, education, certifications } from '../data/experience'
           <h3 class="credentials__title">Certifications</h3>
           <ul class="credentials__list">
             <li v-for="item in certifications" :key="item.title">
-              <p class="credentials__name">{{ item.title }}</p>
+              <p class="credentials__name">
+                <a :href="item.href" class="credentials__link" target="_blank" rel="noopener noreferrer">
+                  {{ item.title }}<Icon name="arrow-up-right" class="credentials__go" />
+                  <span class="visually-hidden">(opens the verified certificate)</span>
+                </a>
+              </p>
               <p class="credentials__sub muted">{{ item.issuer }} · {{ item.date }}</p>
             </li>
           </ul>
@@ -169,8 +176,13 @@ import { experience, education, certifications } from '../data/experience'
   transform-origin: top;
 }
 
+/* The last role gets a line too: it runs to the end of that role and stops */
+.timeline__item:last-child {
+  padding-bottom: 0;
+}
+
 .timeline__item:last-child .timeline__line {
-  display: none;
+  bottom: 0;
 }
 
 .timeline__body {
@@ -207,9 +219,22 @@ import { experience, education, certifications } from '../data/experience'
 
 /* The line draws down as each role arrives; the dot pops in. Only for users who welcome motion. */
 @media (prefers-reduced-motion: no-preference) {
+  /* Wide screens show both roles at once, so they play in order: the first line draws down
+     and, as it arrives, the next dot pops and its own line draws. On phones every role
+     animates on its own as you scroll to it. */
+  .timeline__item {
+    --rail-offset: 0ms;
+  }
+
+  @media (min-width: 52rem) {
+    .timeline__item {
+      --rail-offset: calc(var(--i, 0) * 1300ms);
+    }
+  }
+
   .timeline__line {
     transform: scaleY(0);
-    transition: transform 1200ms cubic-bezier(0.65, 0, 0.35, 1) 300ms;
+    transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1) calc(300ms + var(--rail-offset));
   }
 
   .timeline__item.is-visible .timeline__line {
@@ -218,7 +243,7 @@ import { experience, education, certifications } from '../data/experience'
 
   .timeline__dot {
     transform: scale(0);
-    transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms;
+    transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) calc(200ms + var(--rail-offset));
   }
 
   .timeline__item.is-visible .timeline__dot {
@@ -264,6 +289,26 @@ import { experience, education, certifications } from '../data/experience'
 .credentials__name {
   margin: 0;
   font-weight: 500;
+}
+
+.credentials__link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.credentials__link:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.credentials__link .credentials__go {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-left: 0.3rem;
+  vertical-align: -0.1em;
+  color: var(--color-muted);
 }
 
 .credentials__sub {

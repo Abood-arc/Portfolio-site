@@ -47,7 +47,22 @@ export const education = [
 ]
 
 export const certifications = [
-  { title: 'Machine Learning Internship Program', issuer: 'FlyRank AI', date: 'Sep 2026' },
-  { title: 'Developing Back-End Apps with Node.js and Express', issuer: 'IBM, Coursera', date: 'Jul 2026' },
-  { title: 'AWS AI Practitioner Challenge', issuer: 'Udacity', date: 'Jun 2026' },
+  {
+    title: 'Introduction to Model Context Protocol',
+    issuer: 'Anthropic Academy',
+    date: 'Aug 2026',
+    href: 'https://verify.skilljar.com/c/42tdzhmr2t72',
+  },
+  {
+    title: 'Developing Back-End Apps with Node.js and Express',
+    issuer: 'IBM, Coursera',
+    date: 'Jul 2026',
+    href: 'https://www.coursera.org/account/accomplishments/verify/YEWMIFSNT7ZV',
+  },
+  {
+    title: 'AWS AI Practitioner Challenge',
+    issuer: 'Udacity',
+    date: 'Jun 2026',
+    href: 'https://www.udacity.com/certificate/e/796ad5a6-2fbe-11f1-9a56-6b95b1ffe4d0',
+  },
 ]
