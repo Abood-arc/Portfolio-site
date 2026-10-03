@@ -53,7 +53,7 @@ const liveStore = qubix.links[0]
   <section class="band proof" aria-label="Proof in numbers">
     <ul class="container proof__list">
       <li v-for="(item, i) in site.proof" :key="item.label" v-reveal="i" class="proof__item">
-        <span class="proof__value"><CountUp :value="item.value" /></span>
+        <span class="proof__value"><CountUp :value="item.value" :suffix="item.suffix" /></span>
         <span class="proof__label">{{ item.label }}</span>
       </li>
     </ul>
@@ -281,6 +281,10 @@ const liveStore = qubix.links[0]
   }
 }
 
+.proof__item {
+  text-align: center;
+}
+
 .proof__value {
   display: block;
   font-family: var(--font-heading);
@@ -292,7 +296,9 @@ const liveStore = qubix.links[0]
 
 .proof__label {
   display: block;
-  margin-top: 0.25rem;
+  max-width: 15rem;
+  margin: 0.25rem auto 0;
+  text-wrap: balance;
   font-size: var(--text-small);
   color: var(--color-muted);
 }

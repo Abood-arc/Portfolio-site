@@ -12,7 +12,7 @@ export const site = {
     { value: 356, label: 'orders handled on jjbags.in so far' },
     { value: 3, label: 'live stores shipped' },
     { value: 0, label: 'downtime in the first 45+ days' },
-    { value: 4, label: 'projects across web, mobile and AI' },
+    { value: 10, suffix: '+', label: 'projects across web, mobile and AI' },
   ],
   hero: {
     greeting: "Hi, I'm Abdullah Afaq",

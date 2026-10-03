@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps({
   value: { type: Number, required: true },
+  suffix: { type: String, default: '' },
   duration: { type: Number, default: 1800 },
 })
 
@@ -52,5 +53,28 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <span ref="root">{{ shown }}</span>
+  <span ref="root" class="count">
+    <!-- Reserves the final width so a centered number doesn't wobble while it counts -->
+    <span class="count__ghost" aria-hidden="true">{{ value }}{{ suffix }}</span>
+    <span class="count__live" aria-hidden="true">{{ shown }}{{ suffix }}</span>
+    <!-- Screen readers get the final number, not every step of the count -->
+    <span class="visually-hidden">{{ value }}{{ suffix }}</span>
+  </span>
 </template>
+
+<style scoped>
+.count {
+  display: inline-grid;
+  font-variant-numeric: tabular-nums;
+}
+
+.count__ghost,
+.count__live {
+  grid-area: 1 / 1;
+  text-align: center;
+}
+
+.count__ghost {
+  visibility: hidden;
+}
+</style>

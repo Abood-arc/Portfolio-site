@@ -23,6 +23,13 @@ describe('home page', () => {
     expect(w.findAll('.more-work .work-card__title').map((t) => t.text())).not.toContain('Qubix')
   })
 
+  it('shows the proof numbers, with 10+ projects', async () => {
+    const w = await renderAt('/')
+    const values = w.findAll('.proof__item').map((i) => i.get('.count__ghost').text())
+    expect(values).toEqual(['356', '3', '0', '10+'])
+    expect(w.findAll('.proof__item')[3].text()).toContain('projects across web, mobile and AI')
+  })
+
   it('points straight at the Qubix case study and the live store', async () => {
     const w = await renderAt('/')
     const hero = w.get('.hero')
